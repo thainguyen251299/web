@@ -1,600 +1,628 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no,minimal-ui">
-    <title>Desinger Kai !</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0
-        }
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-        img {
-            width: 100%
-        }
-
-        html {
-            background: #FFF;
-            height: 100%
-        }
-
-        body {
-            font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-            margin: 0 auto;
-            text-align: center;
-            width: 100%;
-            height: 100%;
-            background: #F95240 url(./assets/main-bg.png)
-        }
-
-        @media screen and (min-height: 560px) {
-            html {
-                font-size: 100px
-            }
-        }
-
-        @media screen and (min-height: 640px) {
-            html {
-                font-size: 112.5px
-            }
-        }
-
-        @media screen and (min-height: 720px) {
-            html {
-                font-size: 125px
-            }
-        }
-
-        @media screen and (min-height: 800px) {
-            html {
-                font-size: 137.5px
-            }
-        }
-
-        @media screen and (min-height: 880px) {
-            html {
-                font-size: 150px
-            }
-        }
-
-        @media screen and (min-height: 960px) {
-            html {
-                font-size: 162.5px
-            }
-        }
-
-        @media screen and (min-height: 1040px) {
-            html {
-                font-size: 180px
-            }
-        }
-
-        @media screen and (min-height: 1200px) {
-            html {
-                font-size: 200px
-            }
-        }
-
-        html {
-            font-size: 17.6vh
-        }
-
-        #canvas {
-            position: fixed;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-        }
-
-        a {
-            text-decoration: none
-        }
-
-        li, ul, ol {
-            list-style-type: none;
-            padding: 0;
-            margin: 0
-        }
-
-        .hide {
-            display: none
-        }
-
-        .clear {
-            clear: both
-        }
-
-        .loading {
-            background-color: #F05A50;
-            height: 100%;
-            width: 100%;
-        }
-
-        .loading .main {
-            width: 60%;
-            margin: 0 auto;
-            color: #FFF
-        }
-
-        .loading .main img {
-            width: 60%;
-            margin: 1rem auto 0
-        }
-
-        .loading .main .title {
-            font-size: .3rem
-        }
-
-        .loading .main .text {
-            font-size: .15rem
-        }
-
-        .loading .main .bar {
-            height: .12rem;
-            width: 100%;
-            border: 3px solid #FFF;
-            border-radius: .6rem;
-            margin: .1rem 0;
-        }
-
-        .loading .main .bar .sub {
-            height: .1rem;
-            width: 98%;
-            margin: .008rem auto 0;
-        }
-
-        .loading .main .bar .percent {
-            height: 100%;
-            width: 0;
-            background-color: #FFF;
-            border-radius: .6rem;
-        }
-
-        .loading .logo {
-            position: absolute;
-            bottom: .3rem;
-            left: 0;
-            right: 0
-        }
-
-        .loading .logo img {
-            width: 1rem
-        }
-
-        .content {
-            height: 100vh;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .landing .title {
-            width: 60%;
-        }
-
-        .landing .logo {
-            width: 30%;
-            position: absolute;
-            right: .2rem;
-            top: .2rem;
-        }
-
-        .landing .action-2 {
-            position: absolute;
-            bottom: .2rem;
-            width: 100%;
-        }
-
-        .landing .start {
-            width: 65%;
-        }
-
-        .slideTop {
-            -webkit-animation: st 1s ease-in-out;
-            animation: st 1s ease-in-out;
-        }
-
-        @-webkit-keyframes st {
-            0% {
-                transform: translateZ(0)
-            }
-            100% {
-                transform: translate3d(0, -100%, 0)
-            }
-        }
-
-        @keyframes st {
-            0% {
-                transform: translateZ(0)
-            }
-            100% {
-                transform: translate3d(0, -100%, 0)
-            }
-        }
-
-        .slideBottom {
-            -webkit-animation: sb 1s ease-in-out;
-            animation: sb 1s ease-in-out;
-        }
-
-        @-webkit-keyframes sb {
-            0% {
-                transform: translateZ(0)
-            }
-            100% {
-                transform: translate3d(0, 200%, 0)
-            }
-        }
-
-        @keyframes sb {
-            0% {
-                transform: translateZ(0)
-            }
-            100% {
-                transform: translate3d(0, 200%, 0)
-            }
-        }
-
-        .swing {
-            -webkit-animation: sw 2s ease-in-out alternate infinite;
-            animation: sw 2s ease-in-out alternate infinite;
-        }
-
-        @-webkit-keyframes sw {
-            0% {
-                transform: rotate(5deg);
-                transform-origin: top center;
-            }
-            100% {
-                transform: rotate(-5deg);
-                transform-origin: top center;
-            }
-        }
-
-        @keyframes sw {
-            0% {
-                transform: rotate(5deg);
-                transform-origin: top center;
-            }
-            100% {
-                transform: rotate(-5deg);
-                transform-origin: top center;
-            }
-        }
-
-        .modal .mask {
-            background-color: #000;
-            opacity: .6;
-            position: fixed;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .modal .modal-content {
-            position: fixed;
-            height: 100%;
-            width: 90%;
-            margin-top: .3rem;
-            top: 0;
-        }
-
-        .modal .main {
-            width: 85%;
-            margin: 0 auto;
-        }
-
-        .modal .container {
-            position: relative
-        }
-
-        .modal .bg {
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0
-        }
-
-        .modal .modal-main {
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            margin-top: -0.4rem;
-        }
-
-        .modal .over-img {
-            width: 45%;
-            margin: .8rem auto 0
-        }
-
-        .modal .over-score {
-            margin-top: -0.2rem;
-            font-size: .5rem;
-            color: #FF735C;
-            text-shadow: -2px -2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF, 2px 2px 0 #FFF;
-        }
-
-        .modal .tip {
-            font-size: .16rem;
-            color: #000;
-        }
-
-        .modal .over-button-b {
-            width: 70%;
-            margin: 0.1rem auto 0
-        }
-
-        .wxShare {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 11;
-        }
-
-        .wxShare img {
-            width: 85%;
-            float: center;
-            margin: 10px 10px 0 0
-        }
-		
-		.wxShared {
-			position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 11;
-		}	
-		
-		.wxShared img {
-            width: 95%;
-            float: center;
-            margin: 10px 10px 0 0
-        }
-		
-        @font-face {
-            font-family: 'wenxue';
-            src: url('./assets/wenxue.eot');
-            src: url('./assets/wenxue.eot'),
-            url('./assets/wenxue.woff'),
-            url('./assets/wenxue.ttf'),
-            url('./assets/wenxue.svg');
-        }
-
-        .font-family {
-            font-family: 'wenxue';
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CV template">
+    <meta name="author" content="Nguyen Huu Thai">
+    <meta property="og:url" content="" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Nguyễn Hữu Thái" />
+    <meta property="og:description" content="Thông tin cá nhân" />
+    <meta property="og:image" content="" />
+    <title>Nguyễn Hữu Thái</title>
+    <link href="css/style.css" rel="stylesheet" media="screen">
 </head>
-<body>
-<canvas id="canvas" class="hide"></canvas>
-<div class="content">
-    <div class="loading">
-        <div class="main"><img
-                src="./assets/main-loading.gif">
-            <div class="progress">
-                <div class="title font-family">0%</div>
-                <div class="bar">
-                    <div class="sub">
-                        <div class="percent"></div>
+
+<body class="body-full-page">
+
+    <div class="loader">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- Content CLick Capture-->
+
+    <div class="click-capture"></div>
+
+    <!-- Sidebar Menu-->
+
+    <div class="menu">
+        <span class="close-menu icon-cross2 right-boxed"></span>
+        <ul class="menu-list right-boxed">
+            <li data-menuanchor="page1">
+                <a href="#page1">Giới Thiệu</a>
+            </li>
+            <li data-menuanchor="page2">
+                <a href="#page2">Thông Tin</a>
+            </li>
+            <li data-menuanchor="page3">
+                <a href="#page3">Tuổi Trẻ</a>
+            </li>
+            <li data-menuanchor="page4">
+                <a href="#page4">Khả năng</a>
+            </li>
+            <li data-menuanchor="page6">
+                <a href="#page6">Support</a>
+            </li>
+            <li data-menuanchor="page7">
+                <a href="#page7">Phương Châm</a>
+            </li>
+            <li data-menuanchor="page8">
+                <a href="#page8">Liên Hệ</a>
+            </li>
+        </ul>
+        <div class="menu-footer right-boxed">
+            <div class="social-list">
+
+                <a href="https://www.facebook.com/ThanhQuoc.ISME" class="icon ion-social-facebook"></a>
+                <a href="#" class="icon ion-social-googleplus"></a>
+            </div>
+            <div class="copy">© 2020 - 2021<br></div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+
+    <header class="navbar navbar-2 navbar-white boxed">
+        <div class="navbar-bg"></div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+        <a class="brand" href="#">
+
+            <div class="brand-info">
+                <div class="brand-name">Hữu Thái</div>
+                <div class="brand-text">Nguyễn Hữu Thái</div>
+            </div>
+        </a>
+
+        <div class="social-list hidden-xs">
+            <a href="#" class="icon ion-social-twitter"></a>
+            <a href="https://www.facebook.com/hthai99" class="icon ion-social-facebook"></a>
+            <a href="#" class="icon ion-social-googleplus"></a>
+            <a href="#" class="icon ion-social-linkedin"></a>
+        </div>
+    </header>
+    <div class="copy-bottom white boxed">© 404 2020.</div>
+    <div class="lang-bottom white boxed">
+    </div>
+    <div class="pagepiling">
+        <div data-anchor="page1" class="pp-scrollable text-white section section-1">
+            <div class="scroll-wrap">
+                <div class="section-bg" style="background-image:url(https://anhdephd.com/wp-content/uploads/2018/02/hinh-nen-full-hd-hoang-hon-do-ruc-tren-ho-McDonald.jpg);"></div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title hidden-xs hidden-sm"><span>Giới thiệu</span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro">
+                                        <div class="row">
+                                            <div class="col-md-8 col-lg-6">
+                                                <p class="subtitle-top">Chào mừng đến với <br><b><span style="font-family: Nosifer">Nguyễn Hữu Thái</span></b></p>
+                                                <h1 class="display-2 text-white"><span class="text-primary">Hello</span> EVERYONE</h1>
+                                                <div class="hr-bottom"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="text">ĐANG TẢI VUI LÒNG CHỜ</div>
             </div>
         </div>
+        <div data-anchor="page2" class="pp-scrollable section section-2">
+            <div class="scroll-wrap">
+                <div class="section-bg" style="background-image:url(https://hinhanhdep.net/wp-content/uploads/2017/12/hinh-nen-hoang-hon-dep-1.jpg);"></div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title text-dark hidden-xs hidden-sm"><span>Tôi làm</span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro">
+                                        <div class="row">
+                                            <div class="col-md-5 col-lg-5">
+                                                <center>
+                                                    <p class="subtitle-top text-dark">
+                                                        <font size="5">Giới Thiệu Một Chút Về Tôi !</font>
+                                                    </p>
+                                                </center>
 
-    </div>
-    <div class="landing hide">
-        <div class="action-1">
-            <img
-                    src="./assets/main-index-title.png"
-                    class="title swing">
+
+
+                                                <center>
+                                                    <div class="index-data-avatar indhead-brdcolor01">
+                                                        <img src="https://scontent.fhan5-6.fna.fbcdn.net/v/t1.0-9/49029681_907961836261444_3841281516747358208_o.jpg?_nc_cat=105&_nc_sid=174925&_nc_ohc=-gQT-wGculUAX_pt5OY&_nc_ht=scontent.fhan5-6.fna&oh=c131f54bfb1a4f2994e8ffa856df4993&oe=5FAE3627" alt="Kai"
+                                                            width="150" height="150">
+                                                    </div>
+
+
+                                                    <h4 class="title-uppercase">Sở Thích của tôi là<br> <span class="text-primary">Desinger & Code</span> để thỏa đam mê.
+                                                    </h4>
+                                                </center>
+                                                <font color="yellow">
+                                                    <b>Mail</b>: Thainguyen251299@gmailcom</br>
+                                                    <b> Phone</b>: 0352609986 </br>
+                                                    <b> Zalo</b>: 0352609986</br>
+                                                    <b> Que Quan</b>:Thái Hòa - Nghệ An </br>
+                                                    <b> Thích</b>: Nữ</font>
+                                                </br>
+                                            </div>
+                                            <div class="col-md-6 col-lg-5 col-md-offset-1 col-lg-offset-2">
+                                                <div class="progress-bars">
+                                                    <div class="clearfix">
+
+                                                        <center>
+                                                            <div class="index-data-avatar indhead-brdcolor01">
+                                                                <img align="moddle" src="hh.jpg" alt="kai" width="150" height="150">
+                                                            </div>
+                                                            <h3> Kỹ Năng Cá Nhân </h3>
+                                                        </center>
+                                                        </br>
+                                                        <font color="yellow">
+                                                            <div class="number pull-left">HTML</div>
+                                                            <div class="number pull-right">60%</div>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                        <div class="number pull-left">CSS</div>
+                                                        <div class="number pull-right">40%</div>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                        <div class="number pull-left">C &amp; C++</div>
+                                                        <div class="number pull-right">50%</div>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                        <div class="number pull-left">Java</div>
+                                                        <div class="number pull-right">30%</div>
+                                                    </div>
+                                                    </font>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="action-2"><img id="start"
-                                   src="./assets/main-index-start.png"
-                                   class="start"></div>
-    </div>
-    <div id="modal" class="modal hide">
-        <div class="mask"></div>
-        <div class="js-modal-content modal-content">
-            <div class="main">
-                <div class="container"><img
-                        src="./assets/main-modal-bg.png"
-                        class="bg">
-                    <div class="modal-main">
-                        <div id="over-modal" class="hide js-modal-card"><img
-                                src="./assets/main-modal-over.png"
-                                class="over-img">
-                            <div id="score" class="over-score font-family"></div>
-                            <div id="over-zero" class="hide">
-                                <div class="tip"><p>LẤY TIỀN TUI ĐÂU CÓ DỄ！</p>
-                                    <img
-                                            src="./assets/main-modal-again-b.png"
-                                            class="over-button-b js-reload"><img
-                                            src="./assets/main-modal-invite-b.png"
-                                            class="over-button-b js-invited"><img
-											src="./assets/bxh.png"
-                                            class="over-button-b js-invite"></img></div>
-											
-											
+        <div data-anchor="page3" class="pp-scrollable text-white section section-3">
+            <div class="scroll-wrap">
+                <div class="bg-changer">
+                    <div class="section-bg" style="background-image:url(images/bg/bg2.jpg);"></div>
+                    <div class="section-bg" style="background-image:url(images/bg/bg2-2.jpg);"></div>
+                    <div class="section-bg" style="background-image:url(images/bg/bg2-3.jpg);"></div>
+                    <div class="section-bg" style="background-image:url(images/bg/bg2-4.jpg);"></div>
+                    <div class="section-bg" style="background-image:url(images/bg/bg2-5.jpg);"></div>
+                    <div class="section-bg" style="background-image:url(images/bg/bg2-6.jpg);"></div>
+                    <div class="section-bg" style="background-image:url(images/bg/bg2-5.jpg);"></div>
+                    <div class="section-bg" style="background-image:url(images/bg/bg2-6.jpg);"></div>
+                </div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title hidden-xs hidden-sm"><span>Thanh Xuân Như Những Cơn Mưa Rào 🍀 </span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2 class="title-uppercase text-white">Tuổi Trẻ Cũng Như Mây Trời !</h2>
+                                                <div class="row-project-box row">
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Tuổi trẻ</h5>
+                                                                <div class="project-category">Tuổi thanh xuân giống như một cơn mưa rào, dù từng bi cảm lạnh vì tắm mưa thì bạn vẫn muốn được đắm mình trong cơn mưa ấy lần nữa.</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Sóng Biển</h5>
+                                                                <div class="project-category">Mắt dõi theo về cái khoảng không vô định ấy… Từng đợt sóng cứ rì rào rì rào… Lòng nhớ lại những hồi ức đáng lẽ không nên nhớ…..</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Cảm Nắng</h5>
+                                                                <div class="project-category">Thanh xuân là chiếc hộp diệu kỳ mà ta giấu trong đó. Cơn cảm nắng đầu tên và cả nụ hôn bối rối vụng về.</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Bế Tắt</h5>
+                                                                <div class="project-category">Nếu thời thanh xuân của bạn quá yên bình, thì khi gặp sóng gió trong quãng đời kế tiếp bạn sẽ dễ dàng chới với và không có điểm tựa.</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Hồi Ức</h5>
+                                                                <div class="project-category">Đã từng nói sẽ dành cả thanh xuân để đi cùng nhau đến bất cứ nơi đâu. Bây giờ tôi muốn hỏi bạn lời nói xưa còn nhớ hay đã quên.</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Hiện Tại</h5>
+                                                                <div class="project-category">Cho đến thời khắc đẹp đẽ nhất của thời thanh xuân, tôi muốn được sống trong tình yêu thương thật là trọn vẹn của mọi người.</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Lev Tolstoy</h5>
+                                                                <div class="project-category">Lý tưởng là ngọn đèn.Không có lý tưởng thì không có phương hướng xác định; không có phương hướng thì không có cuộc sống.</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-project-box col-sm-6 col-md-4 col-lg-3">
+                                                        <a href="#" class="project-box">
+                                                            <div class="project-box-inner">
+                                                                <h5>Longfellow</h5>
+                                                                <div class="project-category">Tuổi trẻ ! Tỏa ánh sáng và tràn ngập màu sắc và mộng ảo, là một chương của cuốn sách, là một câu chuyện không bao giờ kết thúc....</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div><br><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-anchor="page4" class="pp-scrollable section section-4">
+            <div class="scroll-wrap">
+                <div class="section-bg" style="background-image:url(https://hinhanhdep.net/wp-content/uploads/2017/12/hinh-nen-thien-nhien-4k-5.jpg);"></div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title text-dark hidden-xs hidden-sm"><span>Services</span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro">
+                                        <div class="row">
+                                            <div class="col-md-5 col-lg-5">
+                                                <center>
+                                                    <p class="subtitle-top text-dark">Sở Thích của tôi</p>
+                                                </center>
+
+                                                <div class="index-data-avatar indhead-brdcolor01">
+                                                    <img align="left" src="https://i.imgur.com/oumXJ31.png" alt="kai" width="90" height="90">
+                                                </div>
+
+                                                <h3 class="title-uppercase">Thích <span class="text-primary">tạo ra</span> những thứ free và đơn giản</h3>
+                                                <ul class="service-list">
+                                                    <font color="yellow">
+                                                        <li><a href="#">01.  Đọc Sách</a></li>
+                                                        <li><a href="#">02.  Nghe Nhạc</a></li>
+                                                        <li><a href="#">03.  Html & CSS</a></li>
+                                                        <li><a href="#">04.  C,C++</a></li>
+                                                    </font>
+
+
+                                                    <div class="index-data-avatar indhead-brdcolor01">
+                                                        <img align="left" src="https://i.imgur.com/0M0boQO.png" alt="kai" width="90" height="90">
+                                                    </div>
+
+                                                    <h3> Ngoài ra thích </h3>
+                                                    <font color="yellow">
+                                                        <li><a href="#">05.  Tán ngẫu</a></li>
+                                                        <li><a href="#">06.  Thể Thao </a></li>
+                                                    </font>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6 col-lg-5 col-md-offset-1 col-lg-offset-2">
+                                                <div class="dots-image-2">
+                                                    <img alt="" class="img-responsive" src="https://www.thanhquocblog.tk/images.png">
+                                                    <div class="dots"></div>
+                                                    <div class="experience-info">
+                                                        <div class="number">4</div>
+                                                        <div class="text">Năm<br>kinh nghiệm<br>phá hoại</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-anchor="page5" class="pp-scrollable text-white section section-6">
+            <div class="scroll-wrap">
+                <div class="section-bg" style="background-image:url(images/bg/bg3.jpg);"></div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title hidden-xs hidden-sm"><span>Tóm lược</span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="col-resume">
+                                                    <h6 class="resume-title">
+                                                        Học Vấn
+                                                    </h6>
+                                                    <div class="resume-content">
+                                                        <div class="resume-inner">
+                                                            <div class="resume-row">
+                                                                <h6 class="resume-type">Trường THPT Thái Hòa</h6>
+                                                                <p class="resume-study">C2K52</p>
+                                                                <p class="resume-date text-primary"> Hiện tại</p>
+                                                                <p class="resume-text">58K1 - CNTT </p>
+                                                            </div>
+                                                            <div class="resume-row">
+                                                                <h6 class="resume-type">Trung Học Cơ Sở Hòa Hiếu I</h6>
+                                                                <p class="resume-study">Khối A</p>
+                                                                <p class="resume-date text-primary">2010 - 2014</p>
+                                                                <p class="resume-text">Khoảng thời gian đáng nhớ của cuộc đời...</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="col-resume">
+                                                    <h6 class="resume-title">
+                                                        Kinh Nghiệm
+                                                    </h6>
+                                                    <div class="resume-content">
+                                                        <div class="resume-inner">
+                                                            <div class="resume-row">
+                                                                <h6 class="resume-type">Đang học  hỏi lấy kinh nghiệm</h6>
+                                                                
+                                                            </div>
+                                                            <div class="resume-row">
+                                                                <h6 class="resume-type">Chuyên sâu về code</h6>
+                                                                <p class="resume-study">Bất đầu code</p>
+                                                                <p class="resume-date text-primary">2018 - Hiện tại</p>
+                                                                <p class="resume-text">Bất đầu có định hướng tương lai</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-anchor="page6" class="pp-scrollable section section-4">
+            <div class="scroll-wrap">
+                <div class="section-bg" style="background-image:url(http://thuthuatphanmem.vn/uploads/2018/05/23/wallpaper-4k-hinh-nen-4k-phong-canh-thien-nhien-dep-4_100018316.jpg);"></div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title text-dark hidden-xs hidden-sm"><span>Liên Hệ</span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro overflow-hidden">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row-partners">
+                                                    <div class="col-partner">
+                                                        <center>
+                                                            <h2>Thông tin liên hệ</h2>
+                                                        </center>
+                                                        <center>Click Icon dưới 👇</center>
+                                                        <center>
+
+
+
+
+
+                                                            <a id="goidien" href="tel:0352609986">
+                                                                <img src="http://tintuc4.ninhbinhweb.net/wp-content/uploads/2019/02/icon-phone2.png" /></a>
+                                                            <a id="nhantin" href="https://chat.zalo.me/">
+                                                                <img src="http://tintuc4.ninhbinhweb.net/wp-content/uploads/2019/02/icon-sms2.png" /></a>
+                                                            <a id="chatfb" href="https://www.messenger.com/">
+                                                                <img src="http://tintuc4.ninhbinhweb.net/wp-content/uploads/2019/02/icon-mesenger2.png" />
+                                                            </a>
+                                                        </center>
+                                                        <h4>
+                                                            <center>Tiếp tục vuốt lên để xem tiếp </center>
+                                                        </h4>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-anchor="page7" class="pp-scrollable text-white section section-6">
+            <div class="scroll-wrap">
+                <div class="section-bg" style="background-image:url(http://thuthuatphanmem.vn/uploads/2017/11/05/hinh-nen-4k-dep-17_124950.jpg);    webkit-filter: opacity(50%);filter: opacity(50%);"></div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title hidden-xs hidden-sm"><span>Phương châm</span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-5">
+                                                <span class="icon-quote ion-quote"></span>
+                                                <h2 class="title-uppercase text-white">Luôn luôn tìm kiếm điều đơn giản và tối ưu nhất !</h2>
+                                            </div>
+                                            <div class="col-md-5 col-lg-5  col-md-offset-1 col-lg-offset-2">
+                                                <div class="review-carousel owl-carousel">
+                                                    <div class="review-carousel-item">
+                                                        <div class="text">
+                                                            <p>“Đừng so sánh mình với bất cứ ai trong thế giới này. Nếu bạn làm như vậy có nghĩa bạn đang sỉ nhục chính bản thân mình.” – Bill Gates</p>
+                                                            <p> “Bắt đầu từ nơi bạn đứng. Sử dụng những gì bạn có. Làm những gì bạn có thể” – </p>
+                                                        </div>
+                                                        <div class="review-author">
+                                                            <div class="author-name">Luôn Luôn</div>
+                                                            <i>Thích cái đẹp và luôn hướng nhưng thứ tốt đẹp</i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-carousel-item">
+                                                        <div class="text">
+                                                            <p>“ Sống hêt mình vì tuổi trẻ, qúy trọng thời khắc vàng của bản thân"</p>
+                                                            <p> Ahihi."</p>
+                                                        </div>
+                                                        <div class="review-author">
+                                                            <div class="author-name">Gia đình</div>
+                                                            <i>Điều tuyệt với nhất</i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-carousel-item">
+                                                        <div class="text">
+                                                            <p>“ Tôi ước gì có người thật sự để mình có thể trao hạnh phúc cho họ 😊.</p>
+                                                         
+                                                        </div>
+                                                        <div class="review-author">
+                                                            <div class="author-name">???</div>
+                                                            <i>Waiting...</i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-anchor="page8" class="pp-scrollable section section-6">
+            <div class="scroll-wrap">
+                <div class="section-bg" style="background-image:url(http://thuthuatphanmem.vn/uploads/2018/05/23/wallpaper-4k-hinh-nen-4k-phong-canh-thien-nhien-dep-4_100018316.jpg);"></div>
+                <div class="scrollable-content">
+                    <div class="vertical-centred">
+                        <div class="boxed boxed-inner">
+                            <div class="vertical-title text-dark hidden-xs hidden-sm"><span>Liên Hệ</span></div>
+                            <div class="boxed">
+                                <div class="container">
+                                    <div class="intro overflow-hidden">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2 class="title-uppercase">Gửi cho tôi</h2>
+                                                <div class="contact-info">
+                                                    <form class="js-form" novalidate="novalidate">
+                                                        <div class="row">
+                                                            <div class="form-group col-sm-6">
+                                                                <input type="text" name="name" required="" placeholder="Name*" aria-required="true">
+                                                            </div>
+                                                            <div class="form-group col-sm-6">
+                                                                <input type="email" name="email" placeholder="Email">
+                                                            </div>
+                                                            <div class="form-group col-sm-12">
+                                                                <input type="text" name="subject" placeholder="Subject (Optinal)">
+                                                            </div>
+                                                            <div class="form-group col-sm-12">
+                                                                <textarea name="message" required="" placeholder="Message*" aria-required="true"></textarea>
+                                                            </div>
+                                                            <div class="col-sm-12"><button type="submit" class="btn">Post Comment</button></div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="wxShare hide">
-        <img src="./assets/main-top-icon.png">
-	</div>
-	
-	<div class="wxShared hide">
-        <img src="./assets/main-shared-icon.png">	
+
+    <!-- Modals success -->
+
+    <div id="success" class="modal modal-message fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></span>
+                    <h2 class="modal-title">Thank you</h2>
+                    <p class="modal-subtitle">Your message is successfully sent...</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<script src="./dist/main.js"></script>
-<script src="./assets/zepto-1.1.6.min.js"></script>
-<script>
-  var domReady, loadFinish, canvasReady, loadError, gameStart, game, score, successCount
-  // init window height and width
-  var gameWidth = window.innerWidth
-  var gameHeight = window.innerHeight
-  var ratio = 1.5
-  if (gameHeight / gameWidth < ratio) {
-    gameWidth = Math.ceil(gameHeight / ratio)
-  }
-  $('.content').css({ "height": gameHeight + "px", "width": gameWidth + "px" })
-  $('.js-modal-content').css({ "width": gameWidth + "px" })
 
-  // loading animation
-  function hideLoading() {
-    if (domReady && canvasReady) {
-      $('#canvas').show()
-      loadFinish = true
-      setTimeout(function () {
-        $('.loading').hide()
-        $('.landing').show()
-      }, 1000)
-    }
-  }
+    <!-- Modals error -->
 
-  function updateLoading(status) {
-    var success = status.success
-    var total = status.total
-    var failed = status.failed
-    if (failed > 0 && !loadError) {
-      loadError = true
-      alert('加载失败 请刷新后重试')
-      return
-    }
-    var percent = parseInt((success / total) * 100);
-    if (percent === 100 && !canvasReady) {
-      canvasReady = true
-      hideLoading()
-    }
-    percent = percent > 98 ? 98 : percent
-    percent = percent + '%'
-    $('.loading .title').text(percent);
-    $('.loading .percent').css({
-      'width': percent
-    })
-  }
+    <div id="error" class="modal modal-message fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></span>
+                    <h2 class="modal-title">Sorry</h2>
+                    <p class="modal-subtitle"> Something went wrong </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- zing mp3 -->
+    <!-- <iframe scrolling="no" style="    position: fixed;z-index: 20;bottom: 0px;" width="100%" height="67px" src="https://mp3.zing.vn/"
+  frameborder="0" allowfullscreen="true"></iframe> -->
+    <!-- jQuery -->
 
-  function overShowOver() {
-    $('#modal').show()
-    $('#over-modal').show()
-    $('#over-zero').show()
-  }
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/smoothscroll.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.pagepiling.js"></script>
 
-  // game customization options
-  const option = {
-    width: gameWidth,
-    height: gameHeight,
-    canvasId: 'canvas',
-    soundOn: true,
-    setGameScore: function (s) {
-      score = s
-    },
-    setGameSuccess: function (s) {
-      successCount = s
-    },
-    setGameFailed: function (f) {
-      $('#score').text(score)
-      if (f >= 3) overShowOver()
-    }
-  }
-
-  // game init with option
-  function gameReady() {
-    game = TowerGame(option)
-
-    game.load(function () {
-
-      game.playBgm()
-      game.init()
-
-    }, updateLoading)
-  }
-
-  var isWechat = navigator.userAgent.toLowerCase().indexOf("micromessenger") !== -1
-  if (isWechat) {
-    document.addEventListener("WeixinJSBridgeReady", gameReady, false)
-  } else {
-    gameReady()
-  }
-
-  function indexHide() {
-    $('.landing .action-1').addClass('slideTop')
-    $('.landing .action-2').addClass('slideBottom')
-    setTimeout(function () {
-      $('.landing').hide()
-    }, 950)
-  }
-
-  // click event
-  $('#start').on('click', function () {
-    if (gameStart) return
-    gameStart = true
-    indexHide()
-    setTimeout(game.start, 400)
-  })
-
-  $('.js-reload').on('click', function () {
-    window.location.href = window.location.href + '?s=' + (+new Date())
-  })
-
-  $('.js-invite').on('click', function () {
-    $('.wxShare').show()
-  })
-  
-
-  $('.wxShare').on('click', function () {
-    $('.wxShare').hide()
-  })
-  
-   $('.js-invited').on('click', function () {
-    $('.wxShared').show()
-  })
-  
-   $('.wxShared').on('click', function () {
-    $('.wxShared').hide()
-  })
-  
-  // listener
-  window.addEventListener('load', function () {
-    domReady = true
-    hideLoading()
-  }, false);
-</script>
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-  ga('create', 'UA-46444752-20', 'auto');
-  ga('send', 'pageview');
-
-  var _hmt = _hmt || [];
-  (function () {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?c1b044f909411ac4213045f0478e96fc";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
-</script>
+    <!-- Scripts -->
+    <script src="js/scripts.js"></script>
+    <audio autoplay='autoplay' src='http://ThanhQuocBlog.TK/mp3.mp3'></audio>
 </body>
+
 </html>
